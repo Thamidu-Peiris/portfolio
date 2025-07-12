@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { Download, Github, Linkedin, Mail, ExternalLink, Code, Database, Smartphone } from "lucide-react";
+import { Download, Github, Linkedin, Mail, ExternalLink, Code, Database, Smartphone, Globe, DollarSign } from "lucide-react";
 
 export default function Portfolio() {
   const [terminalText, setTerminalText] = useState("");
@@ -49,28 +49,28 @@ export default function Portfolio() {
 
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, product management, and payment integration.",
-      tech: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "Portfolio Website",
+      description: "A modern, responsive portfolio website showcasing my skills and projects. Built with Next.js, TypeScript, and Tailwind CSS for optimal performance and user experience.",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
       github: "#",
       demo: "#",
-      icon: <Smartphone className="h-6 w-6" />
+      icon: <Globe className="h-6 w-6" />
     },
     {
-      title: "Task Management App",
-      description: "Collaborative project management tool with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      tech: ["Vue.js", "Express", "Socket.io", "PostgreSQL"],
-      github: "#",
-      demo: "#",
-      icon: <Code className="h-6 w-6" />
-    },
-    {
-      title: "Data Analytics Dashboard",
-      description: "Interactive dashboard for data visualization and analytics with machine learning insights and predictive modeling.",
-      tech: ["Python", "Django", "D3.js", "TensorFlow"],
+      title: "CRIPS Aqua Plants Export System",
+      description: "A comprehensive export management system for aquatic plants business. Features inventory management, order processing, and customer relationship management.",
+      tech: ["Node.js", "React", "Tailwind CSS", "MongoDB"],
       github: "#",
       demo: "#",
       icon: <Database className="h-6 w-6" />
+    },
+    {
+      title: "Spendly - Financial Tracker App",
+      description: "A mobile application for personal finance management. Helps users track expenses, set budgets, and visualize spending patterns with intuitive charts and reports.",
+      tech: ["Kotlin", "Android Studio", "SQLite", "Material Design"],
+      github: "#",
+      demo: "#",
+      icon: <DollarSign className="h-6 w-6" />
     }
   ];
 
@@ -118,7 +118,7 @@ export default function Portfolio() {
                   </span>
                 </h1>
                 <p className="text-xl text-gray-300 max-w-lg">
-                  Software Engineering Student passionate about building innovative solutions with clean, efficient code.
+                  3rd-year Information Technology undergraduate at SLIIT, dedicated to creating impactful and innovative web solutions.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
@@ -126,9 +126,11 @@ export default function Portfolio() {
                   <Download className="mr-2 h-4 w-4" />
                   Download CV
                 </Button>
-                <Button variant="outline" size="lg" className="border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white">
-                  <Github className="mr-2 h-4 w-4" />
-                  GitHub
+                <Button asChild variant="outline" size="lg" className="border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white">
+                  <a href="https://github.com/Thamidu-Peiris" target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2 h-4 w-4" />
+                    GitHub
+                  </a>
                 </Button>
               </div>
             </div>
@@ -162,7 +164,7 @@ export default function Portfolio() {
             <CardContent className="p-8">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 <Avatar className="w-32 h-32">
-                  <AvatarImage src="/api/placeholder/200/200" alt="Thamidu Peiris" />
+                  <AvatarImage src="/profile-photo.png" alt="Thamidu Peiris" />
                   <AvatarFallback className="text-2xl">TP</AvatarFallback>
                 </Avatar>
                 <div className="text-gray-300 space-y-4 flex-1">
@@ -269,7 +271,7 @@ export default function Portfolio() {
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-purple-400" />
-                  <span className="text-gray-300">thamidu.peiris@email.com</span>
+                  <span className="text-gray-300">thamidu3c@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Linkedin className="h-5 w-5 text-purple-400" />
@@ -277,7 +279,9 @@ export default function Portfolio() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Github className="h-5 w-5 text-purple-400" />
-                  <span className="text-gray-300">github.com/thamidu-peiris</span>
+                  <a href="https://github.com/Thamidu-Peiris" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-purple-400 transition-colors">
+                    github.com/Thamidu-Peiris
+                  </a>
                 </div>
               </div>
             </div>

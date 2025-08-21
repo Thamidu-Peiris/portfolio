@@ -77,7 +77,7 @@ export default function Portfolio() {
   const downloadCV = () => {
     // Create a dummy CV download
     const link = document.createElement('a');
-    link.href = '#';
+    link.href = 'https://drive.google.com/uc?export=download&id=10aA6TR_6SZ7m703dO1m5FJzcLOGDVYrC';
     link.download = 'Thamidu_Peiris_CV.pdf';
     document.body.appendChild(link);
     link.click();

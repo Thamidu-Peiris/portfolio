@@ -79,22 +79,9 @@ export default function Portfolio() {
       // Google Drive direct download link
       const driveUrl = 'https://drive.google.com/uc?export=download&id=10aA6TR_6SZ7m703dO1m5FJzcLOGDVYrC';
       
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = driveUrl;
-      link.download = 'Thamidu_Peiris_CV.pdf';
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      
-      // Append to body, click, and remove
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Alternative method: Open in new tab if direct download doesn't work
-      setTimeout(() => {
-        window.open(driveUrl, '_blank');
-      }, 100);
+      // For Google Drive links, it's better to open in a new tab directly
+      // as the download attribute doesn't work reliably with Google Drive
+      window.open(driveUrl, '_blank');
       
     } catch (error) {
       console.error('Error downloading CV:', error);

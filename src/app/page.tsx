@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,11 +12,31 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { Download, Github, Linkedin, Mail, ExternalLink, Code, Database, Smartphone, Globe, DollarSign } from "lucide-react";
+import { Download, Github, Linkedin, Mail, ExternalLink, Code, Database, Smartphone, Globe, DollarSign, Send, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function Portfolio() {
   const [terminalText, setTerminalText] = useState("");
   const [currentCommand, setCurrentCommand] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  // Form validation schema
+  const contactFormSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Please enter a valid email address"),
+    message: z.string().min(10, "Message must be at least 10 characters")
+  });
+
+  type ContactFormData = z.infer<typeof contactFormSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema)
+  });
 
   const commands = useMemo(() => [
     "$ whoami",
@@ -87,6 +110,36 @@ export default function Portfolio() {
       console.error('Error downloading CV:', error);
       // Fallback: Open in new tab
       window.open('https://drive.google.com/uc?export=download&id=10aA6TR_6SZ7m703dO1m5FJzcLOGDVYrC', '_blank');
+    }
+  };
+
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      // Replace 'YOUR_FORMSPREE_ENDPOINT' with your actual Formspree endpoint
+      const response = await fetch('https://formspree.io/f/manbgryl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        reset(); // Clear the form
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -296,31 +349,91 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <Card className="bg-white/5 border-gray-700 backdrop-blur-sm hover-lift">
-              <CardHeader>
-                <CardTitle className="text-white">Send Message</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Drop me a message and I'll get back to you soon!
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-300">Name</label>
-                  <Input placeholder="Your name" className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-300">Email</label>
-                  <Input type="email" placeholder="your.email@example.com" className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-300">Message</label>
-                  <Textarea placeholder="Your message..." className="bg-white/10 border-gray-600 text-white placeholder:text-gray-400 min-h-[120px]" />
-                </div>
-                <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
-                  Send Message
-                </Button>
-              </CardContent>
-            </Card>
+                         <Card className="bg-white/5 border-gray-700 backdrop-blur-sm hover-lift">
+               <CardHeader>
+                 <CardTitle className="text-white">Send Message</CardTitle>
+                 <CardDescription className="text-gray-400">
+                   Drop me a message and I'll get back to you soon!
+                 </CardDescription>
+               </CardHeader>
+               <CardContent className="space-y-4">
+                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                   <div className="space-y-2">
+                     <label className="text-sm font-medium text-gray-300">Name</label>
+                     <Input 
+                       {...register('name')}
+                       placeholder="Your name" 
+                       className={`bg-white/10 border-gray-600 text-white placeholder:text-gray-400 ${
+                         errors.name ? 'border-red-500' : ''
+                       }`} 
+                     />
+                     {errors.name && (
+                       <p className="text-red-400 text-sm">{errors.name.message}</p>
+                     )}
+                   </div>
+                   <div className="space-y-2">
+                     <label className="text-sm font-medium text-gray-300">Email</label>
+                     <Input 
+                       {...register('email')}
+                       type="email" 
+                       placeholder="your.email@example.com" 
+                       className={`bg-white/10 border-gray-600 text-white placeholder:text-gray-400 ${
+                         errors.email ? 'border-red-500' : ''
+                       }`} 
+                     />
+                     {errors.email && (
+                       <p className="text-red-400 text-sm">{errors.email.message}</p>
+                     )}
+                   </div>
+                   <div className="space-y-2">
+                     <label className="text-sm font-medium text-gray-300">Message</label>
+                     <Textarea 
+                       {...register('message')}
+                       placeholder="Your message..." 
+                       className={`bg-white/10 border-gray-600 text-white placeholder:text-gray-400 min-h-[120px] ${
+                         errors.message ? 'border-red-500' : ''
+                       }`} 
+                     />
+                     {errors.message && (
+                       <p className="text-red-400 text-sm">{errors.message.message}</p>
+                     )}
+                   </div>
+                   
+                   {/* Status Messages */}
+                   {submitStatus === 'success' && (
+                     <div className="flex items-center gap-2 p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
+                       <CheckCircle className="h-5 w-5 text-green-400" />
+                       <p className="text-green-400 text-sm">Message sent successfully! I'll get back to you soon.</p>
+                     </div>
+                   )}
+                   
+                   {submitStatus === 'error' && (
+                     <div className="flex items-center gap-2 p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
+                       <AlertCircle className="h-5 w-5 text-red-400" />
+                       <p className="text-red-400 text-sm">Failed to send message. Please try again.</p>
+                     </div>
+                   )}
+                   
+                   <Button 
+                     type="submit" 
+                     disabled={isSubmitting}
+                     className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                   >
+                     {isSubmitting ? (
+                       <>
+                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                         Sending...
+                       </>
+                     ) : (
+                       <>
+                         <Send className="mr-2 h-4 w-4" />
+                         Send Message
+                       </>
+                     )}
+                   </Button>
+                 </form>
+               </CardContent>
+             </Card>
           </div>
         </div>
       </section>

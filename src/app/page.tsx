@@ -52,8 +52,8 @@ export default function Portfolio() {
       title: "Portfolio Website",
       description: "A modern, responsive portfolio website showcasing my skills and projects. Built with Next.js, TypeScript, and Tailwind CSS for optimal performance and user experience.",
       tech: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
-      github: "#",
-      demo: "#",
+      github: "https://github.com/Thamidu-Peiris/portfolio",
+      demo: "https://thamidu-peiris.netlify.app/",
       icon: <Globe className="h-6 w-6" />
     },
     {
@@ -257,13 +257,17 @@ export default function Portfolio() {
                     ))}
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                      <Github className="mr-2 h-4 w-4" />
-                      Code
+                    <Button asChild variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                      <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" />
+                        Code
+                      </a>
                     </Button>
-                    <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Demo
+                    <Button asChild variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                      <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Demo
+                      </a>
                     </Button>
                   </div>
                 </CardContent>

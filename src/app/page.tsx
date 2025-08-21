@@ -53,7 +53,7 @@ export default function Portfolio() {
       description: "A modern, responsive portfolio website showcasing my skills and projects. Built with Next.js, TypeScript, and Tailwind CSS for optimal performance and user experience.",
       tech: ["Next.js", "TypeScript", "Tailwind CSS", "React"],
       github: "https://github.com/Thamidu-Peiris/portfolio",
-      demo: "https://thamidu-peiris.netlify.app/",
+      demo: "https://thamidu-peiris.netlify.app",
       icon: <Globe className="h-6 w-6" />
     },
     {

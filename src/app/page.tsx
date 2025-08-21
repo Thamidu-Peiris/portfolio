@@ -60,16 +60,16 @@ export default function Portfolio() {
       title: "CRIPS Aqua Plants Export System",
       description: "A comprehensive export management system for aquatic plants business. Features inventory management, order processing, and customer relationship management.",
       tech: ["Node.js", "React", "Tailwind CSS", "MongoDB"],
-      github: "#",
-      demo: "#",
+      github: "https://github.com/Thamidu-Peiris/CRIPS",
+      demo: "https://github.com/Thamidu-Peiris/CRIPS",
       icon: <Database className="h-6 w-6" />
     },
     {
       title: "Spendly - Financial Tracker App",
       description: "A mobile application for personal finance management. Helps users track expenses, set budgets, and visualize spending patterns with intuitive charts and reports.",
       tech: ["Kotlin", "Android Studio", "SQLite", "Material Design"],
-      github: "#",
-      demo: "#",
+      github: "https://play.google.com/store/apps/details?id=com.teamstedia.spendly",
+      demo: "https://play.google.com/store/apps/details?id=com.teamstedia.spendly",
       icon: <DollarSign className="h-6 w-6" />
     }
   ];

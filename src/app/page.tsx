@@ -74,14 +74,33 @@ export default function Portfolio() {
     }
   ];
 
-  const downloadCV = () => {
-    // Create a dummy CV download
-    const link = document.createElement('a');
-    link.href = 'https://drive.google.com/uc?export=download&id=10aA6TR_6SZ7m703dO1m5FJzcLOGDVYrC';
-    link.download = 'Thamidu_Peiris_CV.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const downloadCV = async () => {
+    try {
+      // Google Drive direct download link
+      const driveUrl = 'https://drive.google.com/uc?export=download&id=10aA6TR_6SZ7m703dO1m5FJzcLOGDVYrC';
+      
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = driveUrl;
+      link.download = 'Thamidu_Peiris_CV.pdf';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Alternative method: Open in new tab if direct download doesn't work
+      setTimeout(() => {
+        window.open(driveUrl, '_blank');
+      }, 100);
+      
+    } catch (error) {
+      console.error('Error downloading CV:', error);
+      // Fallback: Open in new tab
+      window.open('https://drive.google.com/uc?export=download&id=10aA6TR_6SZ7m703dO1m5FJzcLOGDVYrC', '_blank');
+    }
   };
 
   return (
